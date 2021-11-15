@@ -4,11 +4,10 @@ const database = require("../database/db");
 const db = database.db;
 const userRef = db.collection('User');
 
-module.exports.checkDuplicateUsernameOrEmail = async (req, res) => {
+module.exports.checkDuplicateUsername = async (req, res) => {
   
   let queryUsername = userRef.where('username', '==', req.body.username);
-  let queryEmail = userRef.where('email', '==', req.body.email);
-  var userDuplicate, emailDuplicate;
+  var userDuplicate;
 
   await queryUsername.get().then(querySnapshot => {
       if (querySnapshot.docs.length > 0) {
@@ -17,6 +16,21 @@ module.exports.checkDuplicateUsernameOrEmail = async (req, res) => {
           userDuplicate = false;
       }
   });
+
+//   console.log(userDuplicate);
+
+  if (userDuplicate) {
+      res.status(400).send({ message: "Failed! Username is already in use!" });
+      return true;
+  }
+
+  return false;
+};
+
+module.exports.checkDuplicateEmail = async (req, res) => {
+  
+  let queryEmail = userRef.where('email', '==', req.body.email);
+  var emailDuplicate;
 
   await queryEmail.get().then(querySnapshot => {
       if (querySnapshot.docs.length > 0) {
@@ -27,12 +41,6 @@ module.exports.checkDuplicateUsernameOrEmail = async (req, res) => {
   });
 
 //   console.log(emailDuplicate);
-//   console.log(userDuplicate);
-
-  if (userDuplicate) {
-      res.status(400).send({ message: "Failed! Username is already in use!" });
-      return true;
-  }
 
   if (emailDuplicate) {
     res.status(400).send({ message: "Failed! Email is already in use!" });
@@ -41,7 +49,6 @@ module.exports.checkDuplicateUsernameOrEmail = async (req, res) => {
 
   return false;
 };
-
 
 module.exports.verifyToken = (req, res) => {
     let token = req.headers["authorization"]
@@ -68,14 +75,14 @@ module.exports.verifyToken = (req, res) => {
     
     if (!tokenBool) {
         res.status(403).send({ message: "No token provided!" });
-        return true;
+        return false;
     }
   
     if (!tokenValid) {
         res.status(401).send({ message: "Unauthorized!" });
-      return true;
+      return false;
     }
   
-    return false;
+    return true;
 };
 

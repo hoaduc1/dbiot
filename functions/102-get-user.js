@@ -14,29 +14,42 @@ module.exports.getUser = async (req, res) => {
       return;
   }
   var checkToken = (await verify.verifyToken(req, res)).valueOf();
-  console.log(checkToken);
+  // console.log(checkToken);
   var user = {};
 
-  if (checkToken) {
+  if (!checkToken) {
     res.end();
   } 
   else { 
     try {   
-      console.log(req.body.uid);  
-      await userRef.doc(req.body.uid).get().then(querySnapshot => {
-            user.username = querySnapshot.data().username;
-            user.email = querySnapshot.data().email;
+      // console.log(req.body.uid);  
+      await userRef.doc(req.body.uid).get().then(doc => {
+            if (doc.data() != null) {
+              user.username = doc.data().username;
+              user.email = doc.data().email;
+              
+              console.log('Get user done');
+              res.writeHead(200, {});
+              res.write(JSON.stringify({
+              msgCode: 10200,
+              msgResp: {
+                    user: user
+                    }
+              }));
+              res.end();
+            } else {
+              res.writeHead(200, {});
+              res.write(JSON.stringify({
+              msgCode: 10201,
+              msgResp: 'User not fount'
+              }));
+              res.end();
+              return;
+            }
+            
     });
       
-      console.log('Get user done');
-      res.writeHead(200, {});
-      res.write(JSON.stringify({
-      msgCode: 10200,
-      msgResp: {
-            user: user
-            }
-      }));
-      res.end();
+
     }
     catch (e) {
       console.log(e);

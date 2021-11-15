@@ -33,7 +33,7 @@ const endpointMap = {
   '100-create-user': 'createUser',
   '101-update-user': 'updateUser',
   '102-get-user': 'getUser',
-  // '103-delete-user': 'deleteUser',
+  '103-delete-user': 'deleteUser',
   // '104-search-user': 'searchUser',
   // '105-change-password': 'changePassword',
   // '106-reset-password': 'resetPassword',
