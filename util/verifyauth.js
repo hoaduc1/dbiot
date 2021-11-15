@@ -12,12 +12,9 @@ module.exports.checkDuplicateUsernameOrEmail = async (req, res) => {
 
   await queryUsername.get().then(querySnapshot => {
       if (querySnapshot.docs.length > 0) {
-        // querySnapshot.forEach(user => {
-        //     console.log(user.data());
-        // })
           userDuplicate = true;
       } else {
-        userDuplicate = false;
+          userDuplicate = false;
       }
   });
 
@@ -62,9 +59,10 @@ module.exports.verifyToken = (req, res) => {
         // console.log(cert); console.log(decoded);
         if (err) {
             tokenValid = false;
-        }
+        } else {
         tokenValid = true;
         req.userId = decoded.uid;
+        }
         // console.log(req.userId);
     });
     

@@ -29,57 +29,10 @@ app.get('/', (req, res) => {
   res.end();
 })
 
-// app.post('/log-in', logIn.logIn);
-
-// app.post('/sign-up', 
-//   [
-//     verifySignUp.checkDuplicateUsernameOrEmail,
-//     verifySignUp.checkRolesExisted
-//   ],
-//   signUp.signUp 
-//   );
-
-// app.get('/get-user', getUser.getUser);
-
-// app.get("/api/test-all", controller.allAccess);
-
-// app.get("/test-user", [authJwt.verifyToken], controller.userBoard);
-
-// app.get("/test-mod",
-//   [authJwt.verifyToken, authJwt.isModerator],
-//   controller.moderatorBoard
-// );
-
-// app.get("/test-admin",
-//   [authJwt.verifyToken, authJwt.isAdmin],
-//   controller.adminBoard
-// );
-
-// /* List all Product */
-// app.get('/product-list', productsManager.productsList);
-
-// /* Add new Product */
-// app.post('/add-product', 
-//   [authJwt.verifyToken, authJwt.isAdmin], 
-//   productsManager.addProduct
-// );
-
-// /* Update product */
-// app.post('/update-product' , 
-//   [authJwt.verifyToken, authJwt.isAdmin],
-//   productsManager.updateProduct
-// );
-
-// /* Delete product */
-// app.delete('/delete-product',
-//   [authJwt.verifyToken, authJwt.isAdmin],
-//   productsManager.deleteProduct
-// );
-
 const endpointMap = {
   '100-create-user': 'createUser',
   '101-update-user': 'updateUser',
-  // '102-get-user': 'getUser',
+  '102-get-user': 'getUser',
   // '103-delete-user': 'deleteUser',
   // '104-search-user': 'searchUser',
   // '105-change-password': 'changePassword',
@@ -128,18 +81,15 @@ const endpointMap = {
 for (let endpoint in endpointMap) {
   var method = endpointMap[endpoint];
   var methods = require('./functions/' + endpoint)
-  console.log('./functions/' + endpoint)
+  // console.log('./functions/' + endpoint)
   subEndpoint = endpoint.substring(4);
-  console.log(method)
+  // console.log(method)
   app.get('/' + subEndpoint, methods[method]);
   app.post('/' + subEndpoint, methods[method]);
   app.put('/' + subEndpoint, methods[method]);
   app.patch('/' + subEndpoint, methods[method]);
   app.delete('/' + subEndpoint, methods[method]);
 }
-
-// var login = require('./functions/107-login');
-// app.post('/log-in', login.login);
 
 
 // try {
