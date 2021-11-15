@@ -91,25 +91,6 @@ for (let endpoint in endpointMap) {
   app.delete('/' + subEndpoint, methods[method]);
 }
 
-
-// try {
-//     await userRef.doc(uid).update(userDoc);
-//   }
-//   catch (e) {
-//     console.log(e);
-//     fail('Can\'t update user');
-//     return;
-//   }
-
-//   try {
-//     await groupRef.doc(groupId).delete();
-//   }
-//   catch (e) {
-//     console.log(e);
-//     fail('Can\'t delete group');
-//     return;
-//   }
-
   async function main() {
     const port = 3000;
     app.listen(port, () => {
