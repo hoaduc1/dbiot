@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
   res.end();
 })
 // test new commit on branch DEV
+// test new commit on branch DEV 2
 const endpointMap = {
   '100-create-user': 'createUser',
   '101-update-user': 'updateUser',
