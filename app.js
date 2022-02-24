@@ -34,7 +34,7 @@ const endpointMap = {
   '101-update-user': 'updateUser',
   '102-get-user': 'getUser',
   '103-delete-user': 'deleteUser',
-  '104-search-user': 'searchUser',
+  // '104-search-user': 'searchUser',
   // '105-change-password': 'changePassword',
   // '106-reset-password': 'resetPassword',
   '107-login': 'login',
